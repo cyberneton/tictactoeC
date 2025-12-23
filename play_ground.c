@@ -2,6 +2,14 @@
 
 make table tictactoe in this file
 
+ ---+---+---+
+|   |   |    |
+ ---+---+---+
+ |   |   |    |
+ ---+---+---+
+ |   |   |    |
+ ---+---+---+
+
 
 */
 #include <stdio.h>
