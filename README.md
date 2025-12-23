@@ -1,6 +1,6 @@
-# tictactoe
+# 🔌 tictactoe
 
-Welcome to the **CircuitSolver** repository.
+Welcome to the **tictactoe** repository.
 
 ## 🚀 Getting Started
 
@@ -10,12 +10,12 @@ Follow the steps below to set up the project on your local machine.
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/pp300950/circuitsolver.git 
+git clone https://github.com/cyberneton/tictactoeC
 ```
 
 **2. Navigate to the project directory**
 ```bash
-cd circuitsolver
+cd tictactoe
 ```
 **3. Open the project (Assuming you have VS Code installed)**
 ```bash
