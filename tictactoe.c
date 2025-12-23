@@ -1,6 +1,5 @@
 /*
- *
- m *ake table tictactoe in this file
+ make table tictactoe in this file
 
     |   |
  ---+---+---
