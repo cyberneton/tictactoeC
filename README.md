@@ -1,4 +1,4 @@
-# 🔌 CircuitSolver
+# tictactoe
 
 Welcome to the **CircuitSolver** repository.
 
