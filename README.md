@@ -23,9 +23,4 @@ code .
 ```
 
 
-for devellop project shold install this for window
-pacman -S mingw-w64-x86_64-SDL2
 
-Linux (Ubuntu/Debian)
-sudo apt-get update
-sudo apt-get install libsdl2-dev
