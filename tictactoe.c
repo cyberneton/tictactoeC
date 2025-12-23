@@ -19,7 +19,5 @@ int main() {
 
     }
     printf("    |   |    \n");
-
-    printf("I love eating fish, meowww\n");
     return 0;
 }
