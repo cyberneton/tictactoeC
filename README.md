@@ -1,6 +1,6 @@
-# 🔌 CircuitSolver
+# 🔌 tictactoe
 
-Welcome to the **CircuitSolver** repository.
+Welcome to the **tictactoe** repository.
 
 ## 🚀 Getting Started
 
@@ -21,3 +21,4 @@ cd tictactoeC
 ```bash
 code .
 ```
+
