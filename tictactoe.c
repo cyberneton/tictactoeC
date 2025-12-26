@@ -1,76 +1,108 @@
-/*
- make table tictactoe in this file
-
-    |   |
- ---+---+---
-    |   |
- ---+---+---
-    |   |
-
- */
-
+#include <assert.h>
+#include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
-int row, column, i; //  variables to store user input
 
-// 2D array to store the status of the game board
-// {0} means set all members of the array to 0
-// X = 1 , O = 2 , empty = 0
-int board[3][3] = {0};
+// Use enum to represent the states.
+// HACK: The value of the enum represent the corresponding char for printing.
+enum State : unsigned char {
+    FREE = ' ',
+    X    = 'X',
+    O    = 'O',
+};
 
-// for main function can know this function
-void start_game(int *row, int *corum, int board[3][3]);
-void generate_board(int board[3][3]);
+// Prints the game to console.
+void print_game(unsigned char game[9]) {
+    printf("\n┌───────────┐\n");
+    for (unsigned char i = 0; i < 9; i++) {
+        if (i % 3 == 0) {
+            printf("│");
+        }
+        putchar(' ');
+        putchar(game[i]);
+        putchar(' ');
 
-int main()
-{
-   // make table tictactoe
-   for (i = 0; i < 3; i++)
-   {
-      printf("  %-2s| %-2s| %-2s\n", "G", "A", "Y");
-      if (i < 2)
-      {
-         printf(" ---+---+--- \n");
-      }
-   }
-
-   // send adress of row and column to function
-   start_game(&row, &column, board);
-
-   // generate the board again
-   generate_board(board);
-
-   return 0;
+        if (i % 3 == 0 || i % 3 == 1) {
+            putchar('|');
+        }
+        if (i % 3 == 2) {
+            printf("│");
+        }
+        if (i % 3 == 2 && i != 8) {
+            printf("\n│---+---+---│\n");
+        }
+    }
+    printf("\n└───────────┘\n");
 }
 
-// this function to start the game
-void start_game(int *row, int *column, int board[3][3])
-{
-   // ask user where to start
-   printf("\n Where do you want to start? (row column) (0,1,2): ");
-   scanf("%d %d", row, column);
+// Prints the game to console, adds index when field is free.
+void print_game_numbered(unsigned char game[9]) {
+    printf("\n┌───────────┐\n");
+    for (unsigned char i = 0; i < 9; i++) {
+        if (i % 3 == 0) {
+            printf("│");
+        }
+        putchar(' ');
+        game[i] == FREE ? printf("%i", i + 1) : putchar(game[i]);
+        putchar(' ');
 
-   // for testing purpose, print out the user input
-   printf("you chose row %d and column %d\n", *row, *column);
-
-   // write user input to array
-   // X = 1 , O = 2 , empty = 0
-   board[*row][*column] = 1; // assuming 1 represents a move by the player
+        if (i % 3 == 0 || i % 3 == 1) {
+            putchar('|');
+        }
+        if (i % 3 == 2) {
+            printf("│");
+        }
+        if (i % 3 == 2 && i != 8) {
+            printf("\n│---+---+---│\n");
+        }
+    }
+    printf("\n└───────────┘\n");
 }
 
-// X = 1 , O = 2 , empty = 0
-void generate_board(int board[3][3])
-{
-   char symbol[] = {' ', 'X', 'O'};
+int main(int argc, const char* _argv[argc]) {
+    // Create a new empty game.
+    unsigned char game[9] = {
+        FREE, FREE, FREE, FREE, FREE, FREE, FREE, FREE, FREE,
+    };
 
-   for (i = 0; i < 3; i++)
-   {
-      printf("  %-2c| %-2c| %-2c\n",
-             symbol[board[i][0]],
-             symbol[board[i][1]],
-             symbol[board[i][2]]);
-      if (i < 2)
-      {
-         printf(" ---+---+--- \n");
-      }
-   }
+    int selected       = -1;
+    bool is_player_one = true;
+
+    while (true) {
+        print_game(game);
+        print_game_numbered(game);
+
+        while (true) {
+            // 256 Bytes seems enough as we expect only one byte input.
+            const size_t buffer_size = 256;
+            char buffer[buffer_size];
+
+            printf("Please enter a field [1-9]:");
+            fgets(buffer, buffer_size, stdin);
+
+            if (sscanf(buffer, "%i", &selected) == 1) {
+                if (selected < 1 || selected > 9) {
+                    printf("Field #%i out of bound!\n", selected);
+                    continue;
+                } else {
+                    if (game[selected - 1] != FREE) {
+                        printf("Fieled already placed!\n");
+                        continue;
+                    } else {
+                        break;
+                    }
+                }
+            } else {
+                printf("Unexpected input: %s\n", buffer);
+                continue;
+            }
+        };
+        assert(selected > 0);
+        assert(selected < 10);
+
+        printf("Field #%i selected\n", selected);
+
+        game[selected - 1] = is_player_one ? X : O;
+        is_player_one = !is_player_one;
+    }
 }
