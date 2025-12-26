@@ -9,93 +9,70 @@ enum State : unsigned char {
     O    = 'O',
 };
 
-void print_level(unsigned char game[9]) {
-    printf("\n┌───────────┐\n");
-    for (unsigned char i = 0; i < 9; i++) {
-        if (i % 3 == 0) {
-            printf("│");
-        }
-        putchar(' ');
-        putchar(game[i]);
-        putchar(' ');
+ */
 
-        if (i % 3 == 0 || i % 3 == 1) {
-            putchar('|');
-        }
-        if (i % 3 == 2) {
-            printf("│");
-        }
-        if (i % 3 == 2 && i != 8) {
-            printf("\n│---+---+---│\n");
-        }
-    }
-    printf("\n└───────────┘\n");
+#include <stdio.h>
+int row, column, i; //  variables to store user input
+
+// 2D array to store the status of the game board
+// {0} means set all members of the array to 0
+// X = 1 , O = 2 , empty = 0
+int board[3][3] = {0};
+
+// for main function can know this function
+void start_game(int *row, int *corum, int board[3][3]);
+void generate_board(int board[3][3]);
+
+int main()
+{
+   // make table tictactoe
+   for (i = 0; i < 3; i++)
+   {
+      printf("  %-2s| %-2s| %-2s\n", "G", "A", "Y");
+      if (i < 2)
+      {
+         printf(" ---+---+--- \n");
+      }
+   }
+
+   // send adress of row and column to function
+   start_game(&row, &column, board);
+
+   // generate the board again
+   generate_board(board);
+
+   return 0;
 }
 
-void print_level_numbered(unsigned char game[9]) {
-    printf("\n┌───────────┐\n");
-    for (unsigned char i = 0; i < 9; i++) {
-        if (i % 3 == 0) {
-            printf("│");
-        }
-        putchar(' ');
-        game[i] == FREE ? printf("%i", i + 1) : putchar(game[i]);
-        putchar(' ');
+// this function to start the game
+void start_game(int *row, int *column, int board[3][3])
+{
+   // ask user where to start
+   printf("\n Where do you want to start? (row column) (0,1,2): ");
+   scanf("%d %d", row, column);
 
-        if (i % 3 == 0 || i % 3 == 1) {
-            putchar('|');
-        }
-        if (i % 3 == 2) {
-            printf("│");
-        }
-        if (i % 3 == 2 && i != 8) {
-            printf("\n│---+---+---│\n");
-        }
-    }
-    printf("\n└───────────┘\n");
+   // for testing purpose, print out the user input
+   printf("you chose row %d and column %d\n", *row, *column);
+
+   // write user input to array
+   // X = 1 , O = 2 , empty = 0
+   board[*row][*column] = 1; // assuming 1 represents a move by the player
 }
 
-int main() {
-    unsigned char game[9] = {
-        FREE, FREE, FREE, FREE, FREE, FREE, FREE, FREE, FREE,
-    };
+// X = 1 , O = 2 , empty = 0
+void generate_board(int board[3][3])
+{
+   char symbol[] = {' ', 'X', 'O'};
 
-    int selected       = -1;
-    bool is_player_one = true;
-
-    while (1) {
-        print_level(game);
-        print_level_numbered(game);
-
-        while (true) {
-            const size_t buffer_size = 256;
-            char buffer[buffer_size];
-
-            printf("Please enter a field [1-9]:");
-            fgets(buffer, buffer_size, stdin);
-
-            if (sscanf(buffer, "%i", &selected) == 1) {
-                if (selected < 1 || selected > 9) {
-                    printf("Field #%i out of bound!\n", selected);
-                    continue;
-                } else {
-                    if (game[selected - 1] != FREE) {
-                        printf("Fieled already placed!\n");
-                        continue;
-                    } else {
-                        break;
-                    }
-                }
-            } else {
-                printf("Unexpected input: %s\n", buffer);
-                continue;
-            }
-        };
-        assert(selected > 0);
-        assert(selected < 10);
-        printf("Selected field is %i\n", selected);
-
-        game[selected - 1] = is_player_one ? X : O;
-        is_player_one      = !is_player_one;
-    }
+   for (i = 0; i < 3; i++)
+   {
+      printf("  %-2c| %-2c| %-2c\n",
+             symbol[board[i][0]],
+             symbol[board[i][1]],
+             symbol[board[i][2]]);
+      if (i < 2)
+      {
+         printf(" ---+---+--- \n");
+      }
+   }
 }
