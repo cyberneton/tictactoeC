@@ -1,13 +1,11 @@
-#include <assert.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdio.h>
+/*
+ make table tictactoe in this file
 
-enum State : unsigned char {
-    FREE = ' ',
-    X    = 'X',
-    O    = 'O',
-};
+    |   |
+ ---+---+---
+    |   |
+ ---+---+---
+    |   |
 
  */
 

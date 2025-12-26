@@ -1,6 +1,6 @@
-# 🔌 Tictactoe
+# 🔌 tictactoe
 
-Welcome to the **Tictactoe** repository.
+Welcome to the **tictactoe** repository.
 
 ## 🚀 Getting Started
 
