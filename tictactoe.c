@@ -59,6 +59,30 @@ void print_game_numbered(unsigned char game[9]) {
     printf("\n└───────────┘\n");
 }
 
+enum State check_win(unsigned char game[9]) {
+    for (int ih = 0; ih < 3; ih++) {
+        size_t iv = ih * 3;
+        // Check vertical lines
+        if (game[iv] == game[iv + 1] && game[iv] == game[iv + 2] &&
+            game[iv] != FREE) {
+            return game[ih];
+        }
+        // Check horizontal lines
+        if (game[ih] == game[ih + 3] && game[ih] == game[ih + 6] &&
+            game[ih] != FREE) {
+            return game[ih];
+        }
+    }
+    // Check cross
+    if (game[0] == game[4] && game[0] == game[8] && game[0] != FREE) {
+        return game[0];
+    }
+    if (game[2] == game[4] && game[2] == game[6] && game[2] != FREE) {
+        return game[0];
+    }
+    // No win yet
+    return FREE;
+}
 int main(int argc, const char* _argv[argc]) {
     // Create a new empty game.
     unsigned char game[9] = {
@@ -77,7 +101,7 @@ int main(int argc, const char* _argv[argc]) {
             const size_t buffer_size = 256;
             char buffer[buffer_size];
 
-            printf("Please enter a field [1-9]:");
+            printf("Please enter a field (%c) [1-9]:", is_player_one ? X : O);
             fgets(buffer, buffer_size, stdin);
 
             if (sscanf(buffer, "%i", &selected) == 1) {
@@ -103,6 +127,16 @@ int main(int argc, const char* _argv[argc]) {
         printf("Field #%i selected\n", selected);
 
         game[selected - 1] = is_player_one ? X : O;
-        is_player_one = !is_player_one;
+        is_player_one      = !is_player_one;
+
+        enum State player_won = check_win(game);
+        if (player_won != FREE) {
+            printf("Player %c has won!\n", player_won);
+            print_game(game);
+            // Clear game
+            for (int i = 0; i < sizeof(game) / sizeof(game[0]); i++) {
+                game[i] = FREE;
+            }
+        }
     }
 }
